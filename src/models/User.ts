@@ -1,11 +1,7 @@
 import { model, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 import environment from '../environment.js';
-import {
-  MIN_EMAIL_LENGTH,
-  MIN_PASSWORD_LENGTH,
-  MIN_USERNAME_LENGTH,
-} from '../constants.js';
+import { mongooseConst } from '../constants.js';
 
 const userSchema = new Schema(
   {
@@ -13,21 +9,30 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      minLength: MIN_USERNAME_LENGTH,
+      minLength: mongooseConst.MIN_USERNAME_LENGTH,
     },
     email: {
       type: String,
       required: true,
       unique: true,
-      minLength: MIN_EMAIL_LENGTH,
+      minLength: mongooseConst.MIN_EMAIL_LENGTH,
     },
     password: {
       type: String,
       required: true,
-      minLength: MIN_PASSWORD_LENGTH,
+      minLength: mongooseConst.MIN_PASSWORD_LENGTH,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: { type: Date, default: null },
   },
-  { collation: { locale: 'en', strength: 2 } }
+  { collation: { locale: 'en', strength: 2 }, timestamps: true }
+);
+userSchema.index(
+  { deletedAt: 1 },
+  { expireAfterSeconds: mongooseConst.EXPIRES_AFTER_SECONDS }
 );
 userSchema.pre('save', async function () {
   const hashedPassword = await bcrypt.hash(this.password, environment.HASH_ROUNDS);
@@ -35,3 +40,14 @@ userSchema.pre('save', async function () {
 });
 
 export default model('user', userSchema);
+
+/** // TODO:
+ * flag to isDeleted true and add deletedAt
+const expireDate = new Date(Date.now()); // now, since TTL counts from this field
+
+await User.findByIdAndUpdate(userId, {
+  isDeleted: true,
+  deletedAt: expireDate,
+});
+ 
+ */
