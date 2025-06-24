@@ -1,18 +1,24 @@
 import express from 'express';
-import 'dotenv/config';
+import 'dotenv/config.js';
 import mongooseConfig from './configs/mongooseConfig.js';
 import expressConfig from './configs/expressConfig.js';
+import { bootstrapApp } from './constants.js';
 
-const app = express();
+async function bootstrap() {
+  const app = express();
 
-try {
-  await mongooseConfig();
-  console.log('DB connected successfully...');
-} catch (error) {
-  console.log(`DB can NOT connect... : ${error}`);
+  try {
+    await mongooseConfig();
+    console.log(bootstrapApp.DB_SUCCESSFULLY);
+  } catch (error) {
+    console.log(bootstrapApp.DB_ERROR(error as Error));
+    process.exit(1);
+  }
+  expressConfig(app);
+
+  app.listen(bootstrapApp.PORT, () => console.log(bootstrapApp.APP_LISTEN));
 }
-expressConfig(app);
-
-app.listen(3000, () =>
-  console.log('Server is listening on http://localhost:3000...')
-);
+bootstrap().catch((error) => {
+  console.error(bootstrapApp.BOOTSTRAP_ERROR, error);
+  process.exit(1);
+});
