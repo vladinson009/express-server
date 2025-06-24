@@ -1,0 +1,14 @@
+import { SECRET_TOKEN } from '../constants.js';
+import { NewUserType } from '../types/UserService.js';
+import JwtPromisify from './jwtPromisify.js';
+
+export default async function (user: NewUserType) {
+  const payload = {
+    _id: user._id,
+    email: user.email,
+    username: user.username,
+  };
+
+  const token = await JwtPromisify.sign(payload, SECRET_TOKEN, { expiresIn: '2h' });
+  return token;
+}
