@@ -10,7 +10,7 @@ const configs: EnvironmentConfigs = {
     DB_CONNECTION_STRING:
       process.env.DB_CONNECTION_STRING || 'mongodb://localhost:27017/dog-hills',
     SECRET_TOKEN: process.env.SECRET_TOKEN || 'alaBaLa',
-    HASH_ROUNDS: process.env.HASH_ROUNDS || 8,
+    HASH_ROUNDS: Number(process.env.HASH_ROUNDS) || 8,
   },
 };
 const environment: Environment =
