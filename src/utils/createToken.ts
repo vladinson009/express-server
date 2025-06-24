@@ -1,4 +1,4 @@
-import { SECRET_TOKEN } from '../constants.js';
+import environment from '../environment.js';
 import { NewUserType } from '../types/UserService.js';
 import JwtPromisify from './jwtPromisify.js';
 
@@ -9,6 +9,8 @@ export default async function (user: NewUserType) {
     username: user.username,
   };
 
-  const token = await JwtPromisify.sign(payload, SECRET_TOKEN, { expiresIn: '2h' });
+  const token = await JwtPromisify.sign(payload, environment.SECRET_TOKEN, {
+    expiresIn: '2h',
+  });
   return token;
 }
