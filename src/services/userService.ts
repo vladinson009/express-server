@@ -13,12 +13,19 @@ export default class UserService {
     if (!parsed.success) {
       throw new Error(parsed.error.issues.map((i) => i.message).join(', '));
     }
-    console.log('validData');
     const { repass, ...validData }: RegisterUserInput = parsed.data;
     try {
-      const isUser = await User.findOne({ email: validData.email });
+      const isUser = await User.findOne({
+        $or: [{ email: validData.email }, { username: validData.username }],
+      });
+      console.log(isUser);
+
       if (isUser) {
-        throw new Error('Email already exists!');
+        if (isUser.email === validData.email) {
+          throw new Error('Email already exists!');
+        } else if (isUser.username === validData.username) {
+          throw new Error('Username already exists!');
+        }
       }
 
       const newUser = await User.create(validData);
@@ -40,7 +47,7 @@ export default class UserService {
       typeof userInput.password !== 'string' ||
       typeof userInput.username !== 'string'
     ) {
-      throw new Error('Invalid Data');
+      throw new Error('Invalid User Input Data');
     }
     try {
       const parsed = await LoginUserSchema.safeParseAsync(userInput);
