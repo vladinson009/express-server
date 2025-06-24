@@ -18,8 +18,6 @@ export default class UserService {
       const isUser = await User.findOne({
         $or: [{ email: validData.email }, { username: validData.username }],
       });
-      console.log(isUser);
-
       if (isUser) {
         if (isUser.email === validData.email) {
           throw new Error('Email already exists!');
@@ -27,14 +25,13 @@ export default class UserService {
           throw new Error('Username already exists!');
         }
       }
-
       const newUser = await User.create(validData);
       return createToken(newUser);
     } catch (error) {
       if (error instanceof Error) {
         throw error.message;
       } else {
-        console.log(error);
+        throw error;
       }
     }
   }
@@ -72,7 +69,7 @@ export default class UserService {
       if (error instanceof Error) {
         throw error.message;
       } else {
-        console.log(error);
+        throw error;
       }
     }
   }

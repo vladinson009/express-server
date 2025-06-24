@@ -2,7 +2,7 @@
 const PORT = 3001;
 
 // * Bootstrap App
-export const bootstrapApp = {
+export const bootstrapAppConst = {
   PORT,
   DB_SUCCESSFULLY: '✅ DB connected successfully...',
   APP_LISTEN: `🚀 Server is listening on http://localhost:${PORT}...`,
@@ -11,10 +11,12 @@ export const bootstrapApp = {
 };
 
 // * Mongoose schema
-export const MIN_USERNAME_LENGTH = 3;
-export const MIN_EMAIL_LENGTH = 6;
-export const MIN_PASSWORD_LENGTH = 6;
-
+export const mongooseConst = {
+  MIN_USERNAME_LENGTH: 3,
+  MIN_EMAIL_LENGTH: 6,
+  MIN_PASSWORD_LENGTH: 6,
+  EXPIRES_AFTER_SECONDS: 365 * 24 * 60 * 60, // 1 year
+};
 // * Server error
 export const UNCAUGH_ERROR_MSG =
   'Uncaugh error! Something went wrong with the server :(';
