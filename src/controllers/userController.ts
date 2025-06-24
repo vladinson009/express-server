@@ -14,7 +14,7 @@ userController.post('/register', async (req, res) => {
     if (error instanceof Error) {
       res.json(error.message);
     } else {
-      res.json(UNCAUGH_ERROR_MSG);
+      res.json(error);
     }
   }
 });
@@ -27,7 +27,7 @@ userController.post('/login', async (req, res) => {
     if (error instanceof Error) {
       res.json(error.message);
     } else {
-      res.json(UNCAUGH_ERROR_MSG);
+      res.json(error);
     }
   }
 });
