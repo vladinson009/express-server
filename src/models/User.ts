@@ -1,7 +1,8 @@
 import { model, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
-import environment from '../environment.js';
-import { mongooseConst } from '../constants.js';
+
+import environment from '../constants/environment.js';
+import { mongooseConst } from '../constants/constants.js';
 
 const userSchema = new Schema(
   {
@@ -21,6 +22,15 @@ const userSchema = new Schema(
       type: String,
       required: true,
       minLength: mongooseConst.MIN_PASSWORD_LENGTH,
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin', 'moderator'],
+      default: 'user',
+    },
+    tokenVersion: {
+      type: Number,
+      default: 1,
     },
     isDeleted: {
       type: Boolean,
