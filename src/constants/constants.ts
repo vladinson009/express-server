@@ -1,6 +1,9 @@
 // ! * PORT
 const PORT = 3001;
 
+// ! Authentication Header
+export const authHeader = 'X-Authorization';
+
 // * Bootstrap App
 export const bootstrapAppConst = {
   PORT,
@@ -17,6 +20,3 @@ export const mongooseConst = {
   MIN_PASSWORD_LENGTH: 6,
   EXPIRES_AFTER_SECONDS: 365 * 24 * 60 * 60, // 1 year
 };
-// * Server error
-export const UNCAUGH_ERROR_MSG =
-  'Uncaugh error! Something went wrong with the server :(';
