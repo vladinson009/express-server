@@ -1,4 +1,4 @@
-import environment from '../environment.js';
+import environment from '../constants/environment.js';
 import { NewUserType } from '../types/UserService.js';
 import JwtPromisify from './jwtPromisify.js';
 
