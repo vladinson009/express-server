@@ -1,8 +1,11 @@
+//Global Import
+import { UserDoc } from './types/express/index.js';
+
 import express from 'express';
 import 'dotenv/config.js';
 import mongooseConfig from './configs/mongooseConfig.js';
 import expressConfig from './configs/expressConfig.js';
-import { bootstrapAppConst } from './constants.js';
+import { bootstrapAppConst } from './constants/constants.js';
 
 async function bootstrap() {
   const app = express();
