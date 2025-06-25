@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { mongooseConst } from '../constants.js';
+import { mongooseConst } from '../constants/constants.js';
 
 export const LoginUserSchema = z.object({
   username: z
