@@ -1,4 +1,4 @@
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
 export interface LoginUserInput {
   username: string;
@@ -10,3 +10,5 @@ interface RegisterUserInput extends LoginUserInput {
 }
 
 export type NewUserType = HydratedDocument<Omit<RegisterUserInput, 'repass'>>;
+
+export type UserId = string | Types.ObjectId;
