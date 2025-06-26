@@ -1,12 +1,14 @@
 import environment from '../constants/environment.js';
-import { NewUserType } from '../types/UserService.js';
+import { UserDoc } from '../types/express/index.js';
 import JwtPromisify from './jwtPromisify.js';
 
-export default async function (user: NewUserType) {
+export default async function (user: UserDoc) {
   const payload = {
     _id: user._id,
-    email: user.email,
     username: user.username,
+    email: user.email,
+    role: user.role,
+    tokenVersion: user.tokenVersion,
   };
 
   const token = await JwtPromisify.sign(payload, environment.SECRET_TOKEN, {
