@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import { CallbackError, model, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 import environment from '../constants/environment.js';
@@ -44,9 +44,15 @@ userSchema.index(
   { deletedAt: 1 },
   { expireAfterSeconds: mongooseConst.EXPIRES_AFTER_SECONDS }
 );
-userSchema.pre('save', async function () {
-  const hashedPassword = await bcrypt.hash(this.password, environment.HASH_ROUNDS);
-  this.password = hashedPassword;
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  try {
+    const hashedPassword = await bcrypt.hash(this.password, environment.HASH_ROUNDS);
+    this.password = hashedPassword;
+    next();
+  } catch (error) {
+    next(error as CallbackError);
+  }
 });
 
 export default model('user', userSchema);
