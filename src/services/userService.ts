@@ -52,7 +52,12 @@ export default class UserService {
     if (!user) {
       throw new HttpError(401, 'Invalid email or password');
     }
-
+    if (user.isDeleted) {
+      throw new HttpError(
+        404,
+        `User was deleted at ${user.deletedAt.toLocaleDateString('en-GB')}`
+      );
+    }
     const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!isValidPassword) {
