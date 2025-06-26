@@ -2,7 +2,7 @@
 const PORT = 3001;
 
 // ! Authentication Header
-export const authHeader = 'X-Authorization';
+export const authHeader = 'x-authorization';
 
 // * Bootstrap App
 export const bootstrapAppConst = {
