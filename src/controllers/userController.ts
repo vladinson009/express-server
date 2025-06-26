@@ -3,6 +3,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import UserService from '../services/userService.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { usersPath } from '../constants/routeConstants.js';
+import sanitizeUser from '../utils/sanitizeUser.js';
 
 const userController = Router();
 
@@ -13,7 +14,7 @@ userController.post(
     const userInput: unknown = req.body;
     try {
       const token = await UserService.register(userInput);
-      res.json(token);
+      res.status(200).json(token);
     } catch (error) {
       next(error);
     }
@@ -26,7 +27,7 @@ userController.post(
     const userInput: unknown = req.body;
     try {
       const token = await UserService.login(userInput);
-      res.json(token);
+      res.status(200).json(token);
     } catch (error) {
       next(error);
     }
@@ -45,6 +46,24 @@ userController.post(
     try {
       await UserService.logout(user._id);
       res.status(200).json({ message: 'Logged out successfully' });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+// * Me Info
+userController.get(
+  usersPath.me,
+  authenticate,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = req.user;
+      if (!user) {
+        res.status(401).json({ message: 'Unauthorized' });
+        return;
+      }
+      const sanitizedUser = sanitizeUser(user);
+      res.status(200).json(sanitizedUser);
     } catch (error) {
       next(error);
     }
