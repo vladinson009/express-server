@@ -3,4 +3,5 @@ export const usersPath = {
   login: '/login',
   register: '/register',
   logout: '/logout',
+  me: '/me',
 };
