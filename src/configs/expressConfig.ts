@@ -10,7 +10,6 @@ export default function (app: Express) {
   app.use(cors());
   app.use(express.json());
   app.use(cookieParser());
-  //TODO: auth middleware here
   app.use(router);
   app.use(httpErrorHandler);
 }

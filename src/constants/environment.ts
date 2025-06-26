@@ -1,5 +1,3 @@
-// import type { Environment, EnvironmentConfigs } from './types/Constants.js';
-
 import { Environment, EnvironmentConfigs } from '../types/Constants';
 
 const configs: EnvironmentConfigs = {
