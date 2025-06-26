@@ -68,4 +68,7 @@ export default class UserService {
   public static async logout(userId: UserId): Promise<Response | null> {
     return User.findByIdAndUpdate(userId, { $inc: { tokenVersion: 1 } });
   }
+  public static async me(userId: UserId) {
+    return User.findById(userId);
+  }
 }
