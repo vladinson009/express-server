@@ -2,11 +2,11 @@ import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 
 import createToken from '../utils/createToken.js';
-import { LoginUserSchema } from '../utils/validateLoginUser.js';
+import { LoginUserSchema } from '../utils/validators/validateLoginUser.js';
 import {
   RegisterUserInput,
   RegisterUserSchema,
-} from '../utils/validateRegisterUser.js';
+} from '../utils/validators/validateRegisterUser.js';
 import { HttpError } from '../utils/errorParser.js';
 import { UserId } from '../types/UserServices.js';
 

@@ -1,7 +1,7 @@
-import { CreateCardSchema } from '../utils/validateCreateCard.js';
 import { HttpError } from '../utils/errorParser.js';
 import Card from '../models/Card.js';
-import { EditCardSchema } from '../utils/validateEditCard.js';
+import { EditCardSchema } from '../utils/validators/validateEditCard.js';
+import { CreateCardSchema } from '../utils/validators/validateCreateCard.js';
 
 export default class CardServices {
   public static getById(cardId: string) {
