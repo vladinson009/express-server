@@ -8,9 +8,9 @@ import {
   RegisterUserSchema,
 } from '../utils/validateRegisterUser.js';
 import { HttpError } from '../utils/errorParser.js';
-import { UserId } from '../types/UserService.js';
+import { UserId } from '../types/UserServices.js';
 
-export default class UserService {
+export default class UserServices {
   public static async register(userInput: unknown) {
     const parsed = await RegisterUserSchema.safeParseAsync(userInput);
     if (!parsed.success) {
