@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
-import UserService from '../services/userService.js';
+import UserServices from '../services/userServices.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { usersPath } from '../constants/routeConstants.js';
 import sanitizeUser from '../utils/sanitizeUser.js';
@@ -13,7 +13,7 @@ userController.post(
   async (req: Request, res: Response, next: NextFunction) => {
     const userInput: unknown = req.body;
     try {
-      const token = await UserService.register(userInput);
+      const token = await UserServices.register(userInput);
       res.status(200).json(token);
     } catch (error) {
       next(error);
@@ -26,7 +26,7 @@ userController.post(
   async (req: Request, res: Response, next: NextFunction) => {
     const userInput: unknown = req.body;
     try {
-      const token = await UserService.login(userInput);
+      const token = await UserServices.login(userInput);
       res.status(200).json(token);
     } catch (error) {
       next(error);
@@ -38,13 +38,13 @@ userController.post(
   usersPath.logout,
   authenticate,
   async (req: Request, res: Response, next: NextFunction) => {
-    const user = req.user;
-    if (!user) {
-      res.status(401).json({ message: 'Unauthorized' });
-      return;
-    }
+    const user = req.user!;
+    // if (!user) {
+    //   res.status(401).json({ message: 'Unauthorized' });
+    //   return;
+    // }
     try {
-      await UserService.logout(user._id);
+      await UserServices.logout(user._id);
       res.status(200).json({ message: 'Logged out successfully' });
     } catch (error) {
       next(error);
@@ -57,11 +57,11 @@ userController.get(
   authenticate,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = req.user;
-      if (!user) {
-        res.status(401).json({ message: 'Unauthorized' });
-        return;
-      }
+      const user = req.user!;
+      // if (!user) {
+      //   res.status(401).json({ message: 'Unauthorized' });
+      //   return;
+      // }
       const sanitizedUser = sanitizeUser(user);
       res.status(200).json(sanitizedUser);
     } catch (error) {
