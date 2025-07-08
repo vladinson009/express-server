@@ -13,8 +13,8 @@ userController.post(
   async (req: Request, res: Response, next: NextFunction) => {
     const userInput: unknown = req.body;
     try {
-      const token = await UserServices.register(userInput);
-      res.status(200).json(token);
+      const responseData = await UserServices.register(userInput);
+      res.status(200).json(responseData);
     } catch (error) {
       next(error);
     }
@@ -26,8 +26,8 @@ userController.post(
   async (req: Request, res: Response, next: NextFunction) => {
     const userInput: unknown = req.body;
     try {
-      const token = await UserServices.login(userInput);
-      res.status(200).json(token);
+      const responseData = await UserServices.login(userInput);
+      res.status(200).json(responseData);
     } catch (error) {
       next(error);
     }

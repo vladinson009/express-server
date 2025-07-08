@@ -14,5 +14,11 @@ export default async function (user: UserDoc) {
   const token = await JwtPromisify.sign(payload, environment.SECRET_TOKEN, {
     expiresIn: '2h',
   });
-  return token;
+  return {
+    token: token,
+    _id: payload._id,
+    username: payload.username,
+    email: payload.email,
+    role: payload.role,
+  };
 }

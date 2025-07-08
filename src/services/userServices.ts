@@ -1,7 +1,7 @@
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 
-import createToken from '../utils/createToken.js';
+import createAuth from '../utils/createAuth.js';
 import { LoginUserSchema } from '../utils/validators/validateLoginUser.js';
 import {
   RegisterUserInput,
@@ -29,7 +29,7 @@ export default class UserServices {
       }
     }
     const newUser = await User.create(validData);
-    return createToken(newUser);
+    return createAuth(newUser);
   }
   public static async login(userInput: unknown) {
     if (
@@ -63,7 +63,7 @@ export default class UserServices {
     if (!isValidPassword) {
       throw new HttpError(401, 'Invalid email or password');
     }
-    return createToken(user);
+    return createAuth(user);
   }
   public static async logout(userId: UserId): Promise<Response | null> {
     return User.findByIdAndUpdate(userId, { $inc: { tokenVersion: 1 } });
