@@ -9,7 +9,7 @@ export const CreateCardSchema = z.object({
       cardConstants.MIN_TITLE_LENGTH,
       `Title must be at least ${cardConstants.MIN_TITLE_LENGTH} characters!`
     ),
-  // description: z.string(),
+  description: z.string().optional(),
   imageUrl: z
     .string({ required_error: 'ImageUrl is required!' })
     .nonempty('ImageUrl is required!')
@@ -21,6 +21,7 @@ export const CreateCardSchema = z.object({
     .string({ required_error: 'Author is required!' })
     .nonempty('Author is required!')
     .regex(/^[0-9a-fA-F]{24}$/, 'Invalid author ID!'),
+  likes: z.array(z.string()).optional(),
 });
 
 export type CreateCardInput = z.infer<typeof CreateCardSchema>;
