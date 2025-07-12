@@ -1,0 +1,38 @@
+import { model, Schema } from 'mongoose';
+import { gameConstants } from '../constants/gameConstants.js';
+
+const gameSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      unique: true,
+      minLength: gameConstants.MIN_TITLE_LENGTH,
+    },
+    description: {
+      type: String,
+    },
+    price: { type: Number, required: true },
+    releaseDate: { type: Date },
+    imageUrl: {
+      type: String,
+      required: true,
+      minLength: gameConstants.MIN_IMG_URL_LENGTH,
+    },
+    categories: [{ type: Schema.Types.ObjectId, ref: 'category' }],
+    platforms: [{ type: Schema.Types.ObjectId, ref: 'platform' }],
+    author: {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+      },
+    ],
+  },
+  { collation: { locale: 'en', strength: 2 }, timestamps: true }
+);
+
+export default model('game', gameSchema);
