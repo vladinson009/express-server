@@ -11,9 +11,10 @@ const gameSchema = new Schema(
     },
     description: {
       type: String,
+      default: gameConstants.DEFAULT_DESCRIPTION,
     },
     price: { type: Number, required: true },
-    releaseDate: { type: Date },
+    releaseDate: { type: Date, default: gameConstants.DEFAULT_DATE },
     imageUrl: {
       type: String,
       required: true,
@@ -36,3 +37,8 @@ const gameSchema = new Schema(
 );
 
 export default model('game', gameSchema);
+
+//TODO
+// When you want to get all games in a category:
+
+// const games = await Game.find({ categories: categoryId });
