@@ -38,7 +38,18 @@ export class BaseService<T> {
     });
   }
 
-  public async delete(id: string) {
+  public delete(id: string) {
     return this.model.findByIdAndDelete(id);
   }
+  public isExist(filter: Record<string, string>) {
+    return this.model.findOne(filter);
+  }
+  //TODO: If edit does not meet requirements
+  //   public pushInGameCollection(id: string, value: Record<string, string>) {
+  //     return this.model.findByIdAndUpdate(
+  //       id,
+  //       { $addToSet: value },
+  //       { new: true, runValidators: true }
+  //     );
+  //   }
 }
