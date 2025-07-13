@@ -36,7 +36,7 @@ cardController.post(
   async (req: Request, res: Response, next: NextFunction) => {
     const cardInput: unknown = req.body;
     try {
-      const card = await CardServices.createCard(cardInput);
+      const card = await CardServices.create(cardInput);
       res.status(200).json(card);
     } catch (error) {
       next(error);
@@ -49,9 +49,15 @@ cardController.put(
   authenticate,
   async (req: Request, res: Response, next: NextFunction) => {
     const userInput: unknown = req.body;
+    const userId = req.user!._id;
     const cardId = req.params && req.params.cardId;
     try {
-      const card = await CardServices.editCard(userInput, cardId);
+      const author = (await CardServices.getById(cardId).lean())?.author;
+      const isAuthor = author && author?.equals(userId);
+      if (!isAuthor) {
+        throw new HttpError(401, 'You are not the author!');
+      }
+      const card = await CardServices.edit(userInput, cardId);
       res.status(200).json(card);
     } catch (error) {
       next(error);
@@ -71,7 +77,7 @@ cardController.delete(
       if (!isAuthor) {
         throw new HttpError(401, 'You are not the author!');
       }
-      const deleted = await CardServices.deleteCard(cardId);
+      const deleted = await CardServices.delete(cardId);
       res.status(204).json(deleted);
     } catch (error) {
       next(error);
