@@ -39,10 +39,6 @@ userController.post(
   authenticate,
   async (req: Request, res: Response, next: NextFunction) => {
     const user = req.user!;
-    // if (!user) {
-    //   res.status(401).json({ message: 'Unauthorized' });
-    //   return;
-    // }
     try {
       await UserServices.logout(user._id);
       res.status(200).json({ message: 'Logged out successfully' });
@@ -58,10 +54,6 @@ userController.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = req.user!;
-      // if (!user) {
-      //   res.status(401).json({ message: 'Unauthorized' });
-      //   return;
-      // }
       const sanitizedUser = sanitizeUser(user);
       res.status(200).json(sanitizedUser);
     } catch (error) {
