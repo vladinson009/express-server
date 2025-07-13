@@ -11,6 +11,7 @@ export const cardsPath = {
   edit: '/edit/:cardId',
   delete: '/delete/:cardId',
   getById: '/:cardId',
+  getAll: '',
 };
 export const gamesPath = {
   root: '/games',
@@ -18,6 +19,7 @@ export const gamesPath = {
   edit: '/edit/:gameId',
   delete: '/delete/:gameId',
   getById: '/:gameId',
+  getAll: '',
 };
 export const categoriesPath = {
   root: '/categories',
@@ -25,6 +27,7 @@ export const categoriesPath = {
   edit: '/edit/:categoryId',
   delete: '/delete/:categoryId',
   getById: '/:categoryId',
+  getAll: '',
 };
 export const platformsPath = {
   root: '/platforms',
@@ -32,4 +35,5 @@ export const platformsPath = {
   edit: '/edit/:platformId',
   delete: '/delete/:platformId',
   getById: '/:platformId',
+  getAll: '',
 };
