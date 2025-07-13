@@ -28,4 +28,4 @@ export const EditGameSchema = z.object({
   platforms: z.array(z.string()).optional(),
 });
 
-export type CreateGameInput = z.infer<typeof EditGameSchema>;
+export type EditGameInput = z.infer<typeof EditGameSchema>;
