@@ -12,3 +12,24 @@ export const cardsPath = {
   delete: '/delete/:cardId',
   getById: '/:cardId',
 };
+export const gamesPath = {
+  root: '/games',
+  create: '/create',
+  edit: '/edit/:gameId',
+  delete: '/delete/:gameId',
+  getById: '/:gameId',
+};
+export const categoriesPath = {
+  root: '/categories',
+  create: '/create',
+  edit: '/edit/:categoryId',
+  delete: '/delete/:categoryId',
+  getById: '/:categoryId',
+};
+export const platformsPath = {
+  root: '/platforms',
+  create: '/create',
+  edit: '/edit/:platformId',
+  delete: '/delete/:platformId',
+  getById: '/:platformId',
+};
