@@ -11,11 +11,11 @@ export class BaseService<T> {
   ) {}
 
   public getById(id: string) {
-    return this.model.findById(id);
+    return this.model.findById(id).populate('author');
   }
 
   public getAll() {
-    return this.model.find();
+    return this.model.find().populate('author');
   }
 
   public async create(input: unknown) {
