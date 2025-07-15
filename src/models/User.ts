@@ -22,25 +22,21 @@ const userSchema = new Schema(
       type: String,
       required: true,
       minLength: mongooseConst.MIN_PASSWORD_LENGTH,
-      select: false,
     },
     role: {
       type: String,
       enum: ['user', 'admin', 'moderator'],
       default: 'user',
-      select: false,
     },
     tokenVersion: {
       type: Number,
       default: 1,
-      select: false,
     },
     isDeleted: {
       type: Boolean,
       default: false,
-      select: false,
     },
-    deletedAt: { type: Date, default: null, select: false },
+    deletedAt: { type: Date, default: null },
   },
   { collation: { locale: 'en', strength: 2 }, timestamps: true }
 );
