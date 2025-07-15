@@ -25,6 +25,7 @@ const gameSchema = new Schema(
     author: {
       type: Schema.Types.ObjectId,
       required: true,
+      ref: 'user',
     },
     likes: [
       {
