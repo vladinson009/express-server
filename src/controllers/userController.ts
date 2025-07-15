@@ -34,7 +34,7 @@ userController.post(
   }
 );
 // * Logout user
-userController.post(
+userController.get(
   usersPath.logout,
   authenticate,
   async (req: Request, res: Response, next: NextFunction) => {
