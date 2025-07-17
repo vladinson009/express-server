@@ -73,12 +73,57 @@ This is an Express.js server application implementing a backend API for a Game S
 
 - `title`: required string, min length enforced.
 - `description`: optional string.
+- `price`: optional number.
 - `imageUrl`: required string, min length enforced.
 - `author`: reference to `User` who created the card.
 - `likes`: array of references to `User` documents who liked the card.
 - Timestamps for creation and updates.
 
 ---
+
+# 📚 `Get all data from collection` — Query, Filter, Sort & Pagination
+
+This method provides a flexible way to **filter**, **search**, **sort**, and **paginate** Mongoose documents dynamically via query parameters.
+
+---
+
+## ✅ How It Works
+
+- Parses incoming query parameters (`req.query`).
+- Supports **pagination**, **sorting**, and **dynamic filters**.
+- Filters can match strings via `$regex` or apply numeric limits (`priceLimit`).
+- Runs **2 parallel queries**:
+  - One for data (`find`)
+  - One for total count (`countDocuments`)
+
+---
+
+## 📌 Supported Query Parameters
+
+| Parameter     | Type   | Example        | Description                                            |
+| ------------- | ------ | -------------- | ------------------------------------------------------ |
+| `page`        | Number | `1`            | Current page number. Default: `1`                      |
+| `limit`       | Number | `10`           | Items per page. Default: `10`                          |
+| `sortBy`      | String | `createdAt`    | Field to sort by. Default: `createdAt`                 |
+| `order`       | String | `asc` / `desc` | Sort direction. Default: `desc`                        |
+| Any other key | String | `?title=cat`   | Filter by matching field using case-insensitive regex. |
+| `priceLimit`  | Number | `20`           | Filter numeric fields with `$lte` operator.            |
+
+---
+
+## ✅ Example Queries
+
+- **Basic search**
+
+  ```http
+  GET /api/games?title=RPG
+  GET /api/cards?category=Funny
+
+  GET /api/cards
+  ?limit=10&page=3&order=asc&sortBy=createdAt `default queries`
+  ?priceLimit=100 `only for collections with price prop`
+  ?{propName}=banana `match by regex propery that include banana`
+  ```
 
 ## Installation
 
