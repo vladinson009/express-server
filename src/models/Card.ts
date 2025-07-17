@@ -16,6 +16,8 @@ const cardSchema = new Schema(
       required: true,
       minLength: cardConstants.MIN_IMG_URL_LENGTH,
     },
+    category: { type: String },
+    price: { type: Number },
     author: {
       type: Schema.Types.ObjectId,
       required: true,

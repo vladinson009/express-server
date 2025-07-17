@@ -17,6 +17,8 @@ export const EditCardSchema = z.object({
       cardConstants.MIN_IMG_URL_LENGTH,
       `ImageUrl must be at least ${cardConstants.MIN_IMG_URL_LENGTH} characters!`
     ),
+  price: z.number({ invalid_type_error: 'Price must be of type Number' }).optional(),
+  category: z.string().optional(),
 });
 
 export type EditCardInput = z.infer<typeof EditCardSchema>;

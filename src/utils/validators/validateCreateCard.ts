@@ -22,6 +22,8 @@ export const CreateCardSchema = z.object({
     .nonempty('Author is required!')
     .regex(/^[0-9a-fA-F]{24}$/, 'Invalid author ID!'),
   likes: z.array(z.string()).optional(),
+  price: z.number({ invalid_type_error: 'Price must be of type Number' }).optional(),
+  category: z.string().optional(),
 });
 
 export type CreateCardInput = z.infer<typeof CreateCardSchema>;
