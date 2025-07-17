@@ -1,14 +1,11 @@
-import { HydratedDocument, Types } from 'mongoose';
-
-export interface LoginUserInput {
-  username: string;
-  password: string;
-}
-interface RegisterUserInput extends LoginUserInput {
-  email: string;
-  repass: string;
-}
-
-export type NewUserType = HydratedDocument<Omit<RegisterUserInput, 'repass'>>;
+import { Types } from 'mongoose';
 
 export type UserId = string | Types.ObjectId;
+
+export interface AuthUserResponse {
+  _id: string;
+  username: string;
+  email: string;
+  role: string;
+  tokenVersion: string;
+}
