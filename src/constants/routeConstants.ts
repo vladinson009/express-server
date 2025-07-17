@@ -12,6 +12,8 @@ export const cardsPath = {
   delete: '/delete/:cardId',
   getById: '/:cardId',
   getAll: '',
+  like: '/like/:cardId',
+  unlike: '/unlike/:cardId',
 };
 export const gamesPath = {
   root: '/games',
@@ -20,6 +22,8 @@ export const gamesPath = {
   delete: '/delete/:gameId',
   getById: '/:gameId',
   getAll: '',
+  like: '/like/:gameId',
+  unlike: '/unlike/:gameId',
 };
 export const categoriesPath = {
   root: '/categories',
