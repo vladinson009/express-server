@@ -50,7 +50,7 @@ export default class UserServices {
     const { username, password } = parsed.data;
     const user = await User.findOne({ username });
     if (!user) {
-      throw new HttpError(401, 'Invalid email or password');
+      throw new HttpError(401, 'Invalid username or password');
     }
     if (user.isDeleted) {
       throw new HttpError(
@@ -61,7 +61,7 @@ export default class UserServices {
     const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!isValidPassword) {
-      throw new HttpError(401, 'Invalid email or password');
+      throw new HttpError(401, 'Invalid username or password');
     }
     return createAuth(user);
   }
