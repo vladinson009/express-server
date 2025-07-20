@@ -11,6 +11,7 @@ export const CreatePlatformSchema = z.object({
       invalid_type_error: 'imageUrl must be a valid URL',
     })
     .url(),
+  author: z.string({ required_error: 'Author is required' }),
 });
 
 export type CreatePlatformInput = z.infer<typeof CreatePlatformSchema>;

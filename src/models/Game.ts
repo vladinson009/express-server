@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import { model, Query, Schema } from 'mongoose';
 import { gameConstants } from '../constants/gameConstants.js';
 
 const gameSchema = new Schema(
@@ -6,7 +6,7 @@ const gameSchema = new Schema(
     title: {
       type: String,
       required: true,
-      unique: true,
+
       minLength: gameConstants.MIN_TITLE_LENGTH,
     },
     description: {
@@ -34,8 +34,15 @@ const gameSchema = new Schema(
       },
     ],
   },
-  { collation: { locale: 'en', strength: 2 }, timestamps: true }
+  { timestamps: true }
 );
+gameSchema.pre(/^find/, function (this: Query<any, any>, next) {
+  this.populate([
+    { path: 'categories', select: 'name description author likes' },
+    { path: 'platforms', select: 'name manufacturer imageUrl author likes' },
+  ]);
+  next();
+});
 
 export default model('game', gameSchema);
 

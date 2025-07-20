@@ -2,7 +2,7 @@ import { model, Schema } from 'mongoose';
 
 const platformSchema = new Schema(
   {
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
     manufacturer: { type: String },
     imageUrl: {
       type: String,
@@ -15,8 +15,19 @@ const platformSchema = new Schema(
         message: `Image url should be a valid URL`,
       },
     },
+    author: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'user',
+    },
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+      },
+    ],
   },
-  { collation: { locale: 'en', strength: 2 }, timestamps: true }
+  { timestamps: true }
 );
 
 export default model('platform', platformSchema);
