@@ -9,7 +9,7 @@ export const EditCardSchema = z.object({
       cardConstants.MIN_TITLE_LENGTH,
       `Title must be at least ${cardConstants.MIN_TITLE_LENGTH} characters!`
     ),
-  // description: z.string(),
+  description: z.string(),
   imageUrl: z
     .string({ required_error: 'ImageUrl is required!' })
     .nonempty('ImageUrl is required!')
