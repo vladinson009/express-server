@@ -40,6 +40,7 @@ gameSchema.pre(/^find/, function (this: Query<any, any>, next) {
   this.populate([
     { path: 'categories', select: 'name description author likes' },
     { path: 'platforms', select: 'name manufacturer imageUrl author likes' },
+    { path: 'likes', select: 'username' },
   ]);
   next();
 });
