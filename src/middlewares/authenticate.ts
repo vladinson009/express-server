@@ -18,7 +18,7 @@ export async function authenticate(req: Request, res: Response, next: NextFuncti
     const payload = await JwtPromisify.verify(token, environment.SECRET_TOKEN);
     const user = await User.findById(payload._id);
     if (!user || user.tokenVersion !== payload.tokenVersion) {
-      throw new HttpError(401, 'Invalid or expired token');
+      return next(new HttpError(401, 'Invalid or expired token'));
     }
 
     req.user = user;
