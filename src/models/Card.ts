@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import { model, Query, Schema } from 'mongoose';
 import { cardConstants } from '../constants/cardConstants.js';
 
 const cardSchema = new Schema(
@@ -32,5 +32,9 @@ const cardSchema = new Schema(
   },
   { timestamps: true }
 );
+cardSchema.pre(/^find/, function (this: Query<any, any>, next) {
+  this.populate([{ path: 'likes', select: 'username' }]);
+  next();
+});
 
 export default model('card', cardSchema);
