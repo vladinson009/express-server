@@ -65,10 +65,27 @@ export default class UserServices {
     }
     return createAuth(user);
   }
-  public static async logout(userId: UserId): Promise<Response | null> {
+  public static logout(userId: UserId): Promise<Response | null> {
     return User.findByIdAndUpdate(userId, { $inc: { tokenVersion: 1 } });
   }
-  public static async me(userId: UserId) {
+  public static me(userId: UserId) {
     return User.findById(userId);
+  }
+  public static getAll() {
+    return User.find({ isDeleted: false });
+  }
+  public static changeRole(userId: string, role: string) {
+    return User.findByIdAndUpdate(
+      userId,
+      { role },
+      { runValidators: true, new: true }
+    );
+  }
+  public static deleteUserById(userId: string) {
+    const expireDate = new Date(Date.now());
+    return User.findByIdAndUpdate(userId, {
+      isDeleted: true,
+      deletedAt: expireDate,
+    });
   }
 }
