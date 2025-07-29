@@ -53,7 +53,7 @@ export function createCrudController({
         throw new HttpError(404, 'Document does not exists!');
       }
       const author = doc.author;
-      if (!author._id?.equals(userId)) {
+      if (!author._id?.equals(userId) && req.user?.role === 'user') {
         throw new HttpError(401, 'You are not the author!');
       }
 
@@ -75,7 +75,7 @@ export function createCrudController({
         throw new HttpError(404, 'Document does not exists!');
       }
       const author = doc?.author;
-      if (!author?._id.equals(userId)) {
+      if (!author?._id.equals(userId) && req.user?.role === 'user') {
         throw new HttpError(401, 'You are not the author!');
       }
 
