@@ -4,6 +4,8 @@ import UserServices from '../services/userServices.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { usersPath } from '../constants/routeConstants.js';
 import sanitizeUser from '../utils/sanitizeUser.js';
+import { isAdmin } from '../middlewares/isAdmin.js';
+import { HttpError } from '../utils/errorParser.js';
 
 const userController = Router();
 
@@ -61,4 +63,71 @@ userController.get(
     }
   }
 );
+// * Get All
+userController.get(
+  usersPath.getAll,
+  authenticate,
+  isAdmin,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const users = (await UserServices.getAll()).map(sanitizeUser);
+      res.status(200).json(users);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+// * Edit Role
+userController.put(
+  usersPath.changeRole,
+  authenticate,
+  isAdmin,
+  async (req, res, next) => {
+    const userInput: unknown = req.body;
+    const userId = req.params['userId'];
+    if (
+      !(
+        typeof userInput == 'object' &&
+        userInput !== null &&
+        'role' in userInput &&
+        (userInput.role === 'admin' ||
+          userInput.role === 'moderator' ||
+          userInput.role === 'user')
+      )
+    ) {
+      throw new HttpError(400, 'Role must be "admin", "moderator" or "user"!');
+    }
+    try {
+      const updatedUser = await UserServices.changeRole(userId, userInput.role);
+      if (updatedUser === null) {
+        throw new HttpError(400, 'User with this ID does not exist!');
+      }
+      const sanitizedUser = sanitizeUser(updatedUser);
+      res.status(200).json(sanitizedUser);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+// * Delete User
+userController.get(
+  usersPath.deleteUser,
+  authenticate,
+  isAdmin,
+  async (req, res, next) => {
+    const userId = req.params['userId'];
+
+    try {
+      const user = await UserServices.deleteUserById(userId);
+      if (user === null) {
+        throw new HttpError(400, 'User with this ID does not exist!');
+      }
+      const sanitizedUser = sanitizeUser(user);
+      res.status(200).json(sanitizedUser);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export default userController;
