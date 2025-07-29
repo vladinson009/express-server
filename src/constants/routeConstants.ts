@@ -4,6 +4,9 @@ export const usersPath = {
   register: '/register',
   logout: '/logout',
   me: '/me',
+  getAll: '',
+  changeRole: '/role/:userId',
+  deleteUser: '/delete/:userId',
 };
 export const cardsPath = {
   root: '/cards',
