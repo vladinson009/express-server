@@ -20,5 +20,7 @@ export default async function (user: UserDoc) {
     username: payload.username,
     email: payload.email,
     role: payload.role,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
   };
 }
